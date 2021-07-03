@@ -1,5 +1,5 @@
 class Product  {
-    
+
     id: string
     name: string
     description: string
@@ -12,3 +12,5 @@ class Product  {
         this.expirationdate = expirationdate;
     }
 }
+
+export default Product
