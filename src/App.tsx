@@ -1,5 +1,4 @@
-
-import Layout from './components/Layout';
+import LayoutWrapper from './components/LayoutWrapper';
 import {Redirect, Route, Switch} from "react-router-dom"
 import Home from "./pages/Home"
 import NewProduct from './pages/NewProduct';
@@ -8,7 +7,7 @@ import ProductDetail from "./pages/ProductDetails"
 
 function App() {
   return (
-   <Layout>
+   <LayoutWrapper>
      <Switch>
         <Route path="/" exact>
             <Home/>
@@ -33,7 +32,7 @@ function App() {
           <Redirect to="/" />
         </Route>
      </Switch>
-   </Layout>
+   </LayoutWrapper>
   );
 }
 
