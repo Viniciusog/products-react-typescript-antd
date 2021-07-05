@@ -40,7 +40,7 @@ const ProductContextProvider: React.FC = (props) => {
         //Pegamos o índice do produto
         const productIndex = products.findIndex(product => product.id === id)
 
-        if (productIndex) {
+        if (productIndex !== null) {
             //Pegamos o produto de acordo com o id
             let currentProduct = products[productIndex]
             //Atualizamos produto existente com os valores recebidos
