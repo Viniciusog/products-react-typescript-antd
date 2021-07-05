@@ -1,3 +1,5 @@
+import { useContext} from "react"
+import PagesContext from "../store/pages-context"
 const ProductDetail: React.FC = () => {
 
     return (

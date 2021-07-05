@@ -1,20 +1,29 @@
 import React from 'react';
+import { PagesContext } from '../store/pages-context';
 import { useContext } from "react"
 import product from '../models/product';
 import { Table, Popconfirm, TableColumnProps, Button } from "antd"
 import { ProductContext } from "../store/products-context"
 import { idText } from 'typescript';
 import Product from '../models/product';
+import { Route } from 'react-router-dom';
+import ProductDetail from './ProductDetails';
 
 const Products: React.FC = () => {
+    //Modifica o título e subtítulo do header quando acessar a página de products
+    const pagesContext = useContext(PagesContext);
+    pagesContext.changeHeaderTitle("All products")
+    pagesContext.changeHeaderSubtitle("")
 
     const productContext = useContext(ProductContext)
 
-    /* event: React.MouseEvent<HTMLElement, MouseEvent> | undefined */
     const deleteProductHandler = (id: string) => {
         productContext.onRemove(id)
     }
 
+    const editProductHandler = (id: string) => {
+        console.log("editar: " + id)
+    }
 
     const columns /*: TableColumnProps<Product>[] */ = [
         {
@@ -53,21 +62,37 @@ const Products: React.FC = () => {
              }, */
             render: (_: string, record: Product): JSX.Element => {
                 return (
-                    <Popconfirm
-                        title="Are you sure you want to delete?"
-                        onConfirm={() => deleteProductHandler(record.id)}
-                    >
-                        <Button type="text">Delete</Button>
-                    </Popconfirm>
+                    <React.Fragment>
+                        <Popconfirm
+                            title="Are you sure you want to delete?"
+                            onConfirm={() => deleteProductHandler(record.id)}
+                        >
+                            <Button type="primary" style={{ background: "#c44242", border: "1px solid #c44d4d" }}>Delete</Button>
+                        </Popconfirm>
+                        <Button type="primary" style={{
+                            background: "#d3b142",
+                            border: "1px solid #d3b142",
+                            marginLeft: "20px"
+                        }}
+                            onClick={() => editProductHandler(record.id)}
+                        >
+                            Editar
+                        </Button>
+                    </React.Fragment>
                 )
             },
         }
     ]
 
     return (
-        <Table columns={columns} dataSource={productContext.products}>
+        <React.Fragment>
+            <Table columns={columns} dataSource={productContext.products} style={{ margin: "20px" }}>
 
-        </Table>
+            </Table>
+            <Route path={`/products/:productId`} exact>
+                <ProductDetail/>
+            </Route>
+        </React.Fragment>
     )
 }
 
