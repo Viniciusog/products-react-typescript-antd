@@ -1,23 +1,63 @@
-import React, { useContext } from "react";
+import React, { ChangeEvent, FormEvent, useContext } from "react";
+import { ProductContext, ProductContextObj } from "../store/products-context"
+
 import {
     Form,
     Input,
     Button,
-    Radio,
-    Select,
-    Cascader,
     DatePicker,
-    InputNumber,
-    TreeSelect,
-    Switch,
-  } from 'antd';
+} from 'antd';
 
-import {useState} from "react"
+import { useState } from "react"
 
 import { PagesContext } from "../store/pages-context";
-import FormItem from "antd/lib/form/FormItem";
+import Product from "../models/product";
 
-const NewProduct: React.FC = () => {
+const NewProduct: React.FC = (props) => {
+
+    const productContext = useContext<ProductContextObj>(ProductContext)
+
+    const [name, setName] = useState<string>("")
+    const [description, setDescription] = useState<string>("")
+    const [expirationDate, setExpirationDate] = useState<string>("")
+
+    const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.value
+        setName(name)
+    }
+
+    const descriptionChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        const description = event.target.value
+        setDescription(description)
+    }
+
+    const dateChangeHandler = (date: moment.Moment | null, dateString: string) => {
+        setExpirationDate(dateString)
+    }
+
+    const formSubmitHandler = (event: FormEvent) => {
+
+        const enteredName = name;
+        const enteredDescription = description
+        const enteredExpirationDate = expirationDate
+
+        if (enteredName.trim().length > 0
+            && enteredDescription.trim().length > 0
+            && enteredExpirationDate.trim().length > 0) {
+            
+                const product = new Product(
+                Math.random().toString(),
+                enteredName,
+                enteredDescription,
+                enteredExpirationDate,
+            )
+
+            productContext.onAdd(product)
+        } else {
+            alert("Values must not be empty!")
+        }
+    }
+
 
     //Quando nós acessamos a rota '/', o react irá renderizar o nosso componente Home. 
     //Feito isso, o código abaixo atualizará o headerTitle e headerSubtitle do nosso PagesContext
@@ -29,25 +69,26 @@ const NewProduct: React.FC = () => {
     return (
         <Form
             title="Register new product"
-            subTitle="add new"
             labelAlign="left"
-            labelCol={{span: 6}}
-            wrapperCol={{span: 12}}
+            labelCol={{ span: 6 }}
             layout="horizontal"
-           
-            style={{margin: "auto", marginTop: "20px", maxWidth: "min(600px, 90%)"}}
+            onFinish={formSubmitHandler}
+
+            style={{ margin: "auto", marginTop: "20px", maxWidth: "min(600px, 90%)" }}
         >
             <Form.Item label="Name">
-                <Input></Input>
+                <Input onChange={nameChangeHandler}></Input>
             </Form.Item>
             <Form.Item label="Description">
-                <Input></Input>
+                <Input onChange={descriptionChangeHandler}></Input>
             </Form.Item>
             <Form.Item label="Expiration date">
-                <DatePicker style={{width:"100%"}}></DatePicker>
+                <DatePicker style={{ width: "100%" }} onChange={dateChangeHandler}>
+
+                </DatePicker>
             </Form.Item>
-            <Form.Item style={{display:"flex", alignItems: "center", justifyContent: "center"}}>
-                <Button type="primary" style={{width:"50%"}}>
+            <Form.Item style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Button htmlType="submit" type="primary" style={{ width: "100%" }}>
                     Save
                 </Button>
             </Form.Item>

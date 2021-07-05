@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Product from "../models/product";
 
 //Define o tipo das propriedades do nosso ProductContext
-type ProductContextObj = {
+export type ProductContextObj = {
     products: Product[],
     onAdd: (product: Product) => void,
     onRemove: (id: string) => void
@@ -11,7 +11,7 @@ type ProductContextObj = {
 //Cria o nosso ProductContext e coloca um valor inicial para cada uma das propriedades
 export const ProductContext = React.createContext<ProductContextObj>({
     products: [],
-    onAdd: () => {},
+    onAdd: (product: Product) => {},
     onRemove: (id: string) => {}
 })
 
@@ -22,7 +22,7 @@ const ProductContextProvider: React.FC = (props) => {
 
     const addProductHandler = (product: Product) => {
         setProducts((prevProducts) => {
-            return prevProducts.concat(product);
+            return [...prevProducts, product]
         })
     }
 

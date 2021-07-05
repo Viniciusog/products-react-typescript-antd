@@ -18,10 +18,10 @@ const LayoutWrapper: React.FC = (props) => {
                 title={pagesContext.headerTitle}
                 subTitle={pagesContext.headerSubtitle}
                 extra={[
-                    <Button key="3">Operation</Button>,
-                    <Button key="2">Operation</Button>,
+                    <Button key="3">Products</Button>,
+                    <Button key="2">Add new Product</Button>,
                     <Button key="1" type="primary">
-                        Primary
+                        Home
                     </Button>,
                 ]} />
             <Content
