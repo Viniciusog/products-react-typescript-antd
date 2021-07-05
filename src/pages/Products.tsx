@@ -2,11 +2,12 @@ import React from 'react';
 import { PagesContext } from '../store/pages-context';
 import { useContext } from "react"
 import product from '../models/product';
+import {useHistory} from "react-router-dom"
 import { Table, Popconfirm, TableColumnProps, Button } from "antd"
 import { ProductContext } from "../store/products-context"
 import { idText } from 'typescript';
 import Product from '../models/product';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import ProductDetail from './ProductDetails';
 
 const Products: React.FC = () => {
@@ -16,13 +17,16 @@ const Products: React.FC = () => {
     pagesContext.changeHeaderSubtitle("")
 
     const productContext = useContext(ProductContext)
+    console.log(productContext.products)
+
+    const history = useHistory()
 
     const deleteProductHandler = (id: string) => {
         productContext.onRemove(id)
     }
 
     const editProductHandler = (id: string) => {
-        console.log("editar: " + id)
+        history.push(`/products/${id}`)
     }
 
     const columns /*: TableColumnProps<Product>[] */ = [

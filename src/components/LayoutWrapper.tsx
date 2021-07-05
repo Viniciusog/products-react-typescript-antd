@@ -33,7 +33,7 @@ const LayoutWrapper: React.FC = (props) => {
                     </Button>,
                 ]} />
             <Content
-                style={{ width: "100%", height: "91vh" }}>
+                style={{ width: "100%", height: "91vh"}}>
                 {props.children}
             </Content>
         </Layout>
