@@ -12,6 +12,7 @@ import { useState } from "react"
 
 import { PagesContext } from "../store/pages-context";
 import Product from "../models/product";
+import moment from "moment";
 
 const NewProduct: React.FC = (props) => {
 
@@ -50,9 +51,16 @@ const NewProduct: React.FC = (props) => {
                 enteredName,
                 enteredDescription,
                 enteredExpirationDate,
+                Math.random().toString()
             )
 
             productContext.onAdd(product)
+
+            alert("Product saved!")
+
+            setName("")
+            setDescription("")
+            setExpirationDate("")
         } else {
             alert("Values must not be empty!")
         }
@@ -77,10 +85,10 @@ const NewProduct: React.FC = (props) => {
             style={{ margin: "auto", marginTop: "20px", maxWidth: "min(600px, 90%)" }}
         >
             <Form.Item label="Name">
-                <Input onChange={nameChangeHandler}></Input>
+                <Input onChange={nameChangeHandler} value={name}></Input>
             </Form.Item>
             <Form.Item label="Description">
-                <Input onChange={descriptionChangeHandler}></Input>
+                <Input onChange={descriptionChangeHandler} value={description}></Input>
             </Form.Item>
             <Form.Item label="Expiration date">
                 <DatePicker style={{ width: "100%" }} onChange={dateChangeHandler}>

@@ -1,4 +1,5 @@
 import { Layout, PageHeader, Button } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 import { useContext } from "react"
 import { PagesContext } from "../store/pages-context";
@@ -9,6 +10,9 @@ const LayoutWrapper: React.FC = (props) => {
 
     const pagesContext = useContext(PagesContext)
 
+    const redirectPage = () => {
+        console.log("products")
+    }
     return (
         <Layout>
             <PageHeader
@@ -18,10 +22,14 @@ const LayoutWrapper: React.FC = (props) => {
                 title={pagesContext.headerTitle}
                 subTitle={pagesContext.headerSubtitle}
                 extra={[
-                    <Button key="3">Products</Button>,
-                    <Button key="2">Add new Product</Button>,
+                    <Button key="3" onClick={redirectPage}>
+                        <NavLink to="/products">Products</NavLink>
+                    </Button>,
+                    <Button key="2">
+                        <NavLink to="/new-product">Add new product</NavLink>
+                    </Button>,
                     <Button key="1" type="primary">
-                        Home
+                        <NavLink to="/">Home</NavLink>
                     </Button>,
                 ]} />
             <Content
