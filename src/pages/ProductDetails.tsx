@@ -1,9 +1,9 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState} from "react"
-import {useRouteMatch} from "react-router-dom"
-import { useParams } from "react-router-dom"
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
+import { useRouteMatch } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import { ProductContext } from "../store/products-context"
-import {PagesContext} from "../store/pages-context"
-import {Form, DatePicker, Button, Input} from "antd"
+import { PagesContext } from "../store/pages-context"
+import { Form, DatePicker, Button, Input, Alert } from "antd"
 import Product from "../models/product"
 import moment from "moment"
 
@@ -12,6 +12,8 @@ type ProductDetailParams = {
 }
 
 const ProductDetail: React.FC = () => {
+
+    const history = useHistory()
 
     //Tem que ser productId, pois eu defini, na página Products, essa Route => /products/:productId
     const route = useRouteMatch<ProductDetailParams>()
@@ -28,16 +30,16 @@ const ProductDetail: React.FC = () => {
     //Estados
     const [name, setName] = useState<string>("")
     const [description, setDescription] = useState<string>("")
-    const [expirationDate, setExpirationDate] = useState<string>("")
+    const [expirationDate, setExpirationDate] = useState<string>("2021-01-01")
 
     useEffect(() => {
-        if (product) {
+        if (product !== null && product != undefined) {
             setName(product.name)
             setDescription(product.description)
             setExpirationDate(product.expirationdate)
         }
     }, [product])
-    
+
 
     const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value)
@@ -56,21 +58,37 @@ const ProductDetail: React.FC = () => {
             const enteredName = name
             const enteredDescription = description
             const enteredExpirationDate = expirationDate
+
+            if (enteredName.trim().length > 0 
+            && enteredDescription.trim().length > 0 
+            && enteredExpirationDate.trim().length > 0) {
+                productContext.onEditProduct(productId,
+                    new Product(
+                        productId,
+                        enteredName,
+                        enteredDescription,
+                        enteredExpirationDate,
+                        product!.key))
     
+                alert("Product updated!")
+                
+                setName("")
+                setDescription("")
+                setExpirationDate("2021-01-01")
     
-            productContext.onEditProduct(productId, 
-                new Product(
-                    productId, 
-                    enteredName, 
-                    enteredDescription, 
-                    enteredExpirationDate, 
-                    product!.key))
+                history.replace("/products")
+            } else {
+                alert("Values must not be empty!")
+            }
         }
     }
 
-/*     if (product === null || product === undefined)  {
-        return <p>Product not found with id: {productId}</p>
-    } */
+    if (product === null || product === undefined) {
+        return <Alert message={`Product not found with id: ${productId}`} type="error"
+            style={{
+                textAlign: "center"
+            }} />
+    }
 
     return (
         <Form

@@ -8,7 +8,8 @@ import {
     DatePicker,
 } from 'antd';
 
-import { useState } from "react"
+import { useState} from "react"
+import {useHistory} from "react-router-dom"
 
 import { PagesContext } from "../store/pages-context";
 import Product from "../models/product";
@@ -17,10 +18,11 @@ import moment from "moment";
 const NewProduct: React.FC = (props) => {
 
     const productContext = useContext<ProductContextObj>(ProductContext)
+    const history = useHistory()
 
     const [name, setName] = useState<string>("")
     const [description, setDescription] = useState<string>("")
-    const [expirationDate, setExpirationDate] = useState<string>("")
+    const [expirationDate, setExpirationDate] = useState<string>("2021-01-01")
 
     const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const name = event.target.value
@@ -60,7 +62,10 @@ const NewProduct: React.FC = (props) => {
 
             setName("")
             setDescription("")
-            setExpirationDate("")
+            setExpirationDate("2021-01-01")
+
+            history.replace("/products")
+
         } else {
             alert("Values must not be empty!")
         }
@@ -91,7 +96,7 @@ const NewProduct: React.FC = (props) => {
                 <Input onChange={descriptionChangeHandler} value={description}></Input>
             </Form.Item>
             <Form.Item label="Expiration date">
-                <DatePicker style={{ width: "100%" }} onChange={dateChangeHandler}>
+                <DatePicker style={{ width: "100%" }} onChange={dateChangeHandler} value={moment(expirationDate, "YYYY-MM-DD")}>
 
                 </DatePicker>
             </Form.Item>
