@@ -1,76 +1,19 @@
 import React, { ChangeEvent, FormEvent, useContext } from "react";
-import { ProductContext, ProductContextObj } from "../store/products-context"
-
 import {
     Form,
     Input,
-    Button,
+    Button, 
     DatePicker,
 } from 'antd';
 
-import { useState} from "react"
-import {useHistory} from "react-router-dom"
-
 import { PagesContext } from "../store/pages-context";
-import Product from "../models/product";
-import moment from "moment";
+//Meu hook customizado de produtos
+import { useProduct } from "../hooks/handlers/useProduct";
 
 const NewProduct: React.FC = (props) => {
 
-    const productContext = useContext<ProductContextObj>(ProductContext)
-    const history = useHistory()
-
-    const [name, setName] = useState<string>("")
-    const [description, setDescription] = useState<string>("")
-    const [expirationDate, setExpirationDate] = useState<string>("2021-01-01")
-
-    const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        const name = event.target.value
-        setName(name)
-    }
-
-    const descriptionChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        const description = event.target.value
-        setDescription(description)
-    }
-
-    const dateChangeHandler = (date: moment.Moment | null, dateString: string) => {
-        setExpirationDate(dateString)
-    }
-
-    const formSubmitHandler = (event: FormEvent) => {
-
-        const enteredName = name;
-        const enteredDescription = description
-        const enteredExpirationDate = expirationDate
-
-        if (enteredName.trim().length > 0
-            && enteredDescription.trim().length > 0
-            && enteredExpirationDate.trim().length > 0) {
-            
-                const product = new Product(
-                Math.random().toString(),
-                enteredName,
-                enteredDescription,
-                enteredExpirationDate,
-                Math.random().toString()
-            )
-
-            productContext.onAdd(product)
-
-            alert("Product saved!")
-
-            setName("")
-            setDescription("")
-            setExpirationDate("2021-01-01")
-
-            history.replace("/products")
-
-        } else {
-            alert("Values must not be empty!")
-        }
-    }
-
+    //Estamos pegando os valores automaticamente do nosso useProduct
+    const {form, onFinish, onEdit, onDelete, products} = useProduct()
 
     //Quando nós acessamos a rota '/', o react irá renderizar o nosso componente Home. 
     //Feito isso, o código abaixo atualizará o headerTitle e headerSubtitle do nosso PagesContext
@@ -85,23 +28,23 @@ const NewProduct: React.FC = (props) => {
             labelAlign="left"
             labelCol={{ span: 6 }}
             layout="horizontal"
-            onFinish={formSubmitHandler}
+            form={form}
 
             style={{ margin: "auto", marginTop: "20px", maxWidth: "min(600px, 90%)" }}
         >
             <Form.Item label="Name">
-                <Input onChange={nameChangeHandler} value={name}></Input>
+                <Input name="name"></Input>
             </Form.Item>
             <Form.Item label="Description">
-                <Input onChange={descriptionChangeHandler} value={description}></Input>
+                <Input name="description"></Input>
             </Form.Item>
             <Form.Item label="Expiration date">
-                <DatePicker style={{ width: "100%" }} onChange={dateChangeHandler} value={moment(expirationDate, "YYYY-MM-DD")}>
+                <DatePicker style={{ width: "100%" }} name="expirationDate">
 
                 </DatePicker>
             </Form.Item>
             <Form.Item style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Button htmlType="submit" type="primary" style={{ width: "100%" }}>
+                <Button htmlType="submit" type="primary" style={{ width: "100%" }} onClick={onFinish()}>
                     Save
                 </Button>
             </Form.Item>

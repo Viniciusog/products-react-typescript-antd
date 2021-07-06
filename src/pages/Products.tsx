@@ -80,7 +80,7 @@ const Products: React.FC = () => {
                         }}
                             onClick={() => editProductHandler(record.id)}
                         >
-                            Editar
+                            Edit
                         </Button>
                     </React.Fragment>
                 )
@@ -90,7 +90,7 @@ const Products: React.FC = () => {
 
     return (
         <React.Fragment>
-            <Table columns={columns} dataSource={productContext.products} style={{ margin: "20px" }}>
+            <Table columns={columns} dataSource={productContext.products} rowKey={"id"} style={{ margin: "20px" }}>
 
             </Table>
             <Route path={`/products/:productId`} exact>

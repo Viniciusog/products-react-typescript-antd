@@ -67,11 +67,10 @@ const ProductDetail: React.FC = () => {
                         productId,
                         enteredName,
                         enteredDescription,
-                        enteredExpirationDate,
-                        product!.key))
+                        enteredExpirationDate))
     
                 alert("Product updated!")
-                
+
                 setName("")
                 setDescription("")
                 setExpirationDate("2021-01-01")

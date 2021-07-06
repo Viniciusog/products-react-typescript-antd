@@ -44,7 +44,7 @@ const ProductContextProvider: React.FC = (props) => {
             //Pegamos o produto de acordo com o id
             let currentProduct = products[productIndex]
             //Atualizamos produto existente com os valores recebidos
-            currentProduct = { ...product, id: currentProduct.id, key: currentProduct.key }
+            currentProduct = { ...product, id: currentProduct.id}
 
             let updatedProducts = products
             updatedProducts[productIndex] = currentProduct
