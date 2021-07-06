@@ -29,6 +29,7 @@ const NewProduct: React.FC = (props) => {
             labelCol={{ span: 6 }}
             layout="horizontal"
             form={form}
+            onFinish={onFinish}
 
             style={{ margin: "auto", marginTop: "20px", maxWidth: "min(600px, 90%)" }}
         >
@@ -44,7 +45,7 @@ const NewProduct: React.FC = (props) => {
                 </DatePicker>
             </Form.Item>
             <Form.Item style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Button htmlType="submit" type="primary" style={{ width: "100%" }} onClick={onFinish()}>
+                <Button htmlType="submit" type="primary" style={{ width: "100%" }}>
                     Save
                 </Button>
             </Form.Item>

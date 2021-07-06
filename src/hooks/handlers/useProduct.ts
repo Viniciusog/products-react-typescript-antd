@@ -16,16 +16,21 @@ interface UseProduct {
 const useProduct = (): UseProduct => {
 
     //Instância do nosso form que será usado nas telas
-    const [form] = Form.useForm<any>();
+    const [form] = Form.useForm<Product>();
 
     const productContext = useProductContext()
 
     const onFinish = () => {
-        const product = form.getFieldsValue()
-        productContext.onAdd(product)
-        
-        console.log(" -- onFinish -- ")
-        console.log(productContext.products)
+        const product: Product = form.getFieldsValue()
+        console.log(product) 
+
+        productContext.onAdd(new Product(Math.random().toString(), 
+            product.name, 
+            product.description, 
+            product.expirationdate))
+
+        //Lembrando, aqui o nosso produto não terá um id, o que pode dar erro por causa do construtor em product model
+        //console.log(product) 
         return message.success("Produto cadastrado com sucesso!")
     }
 
