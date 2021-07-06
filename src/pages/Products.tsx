@@ -4,11 +4,10 @@ import { useContext } from "react"
 
 import {useHistory} from "react-router-dom"
 import { Table, Popconfirm, TableColumnProps, Button } from "antd"
-import { ProductContext } from "../store/products-context"
-import { idText } from 'typescript';
 import {Product} from '../models/product';
 import { Redirect, Route } from 'react-router-dom';
 import ProductDetail from './ProductDetails';
+import {useProduct} from "../hooks/handlers/useProduct"
 
 const Products: React.FC = () => {
     //Modifica o título e subtítulo do header quando acessar a página de products
@@ -16,14 +15,15 @@ const Products: React.FC = () => {
     pagesContext.changeHeaderTitle("All products")
     pagesContext.changeHeaderSubtitle("")
 
-    const productContext = useContext(ProductContext)
-    console.log(productContext.products)
+    const {onDelete, products} = useProduct()
 
     const history = useHistory()
 
     const deleteProductHandler = (id: string) => {
-        productContext.onRemove(id)
+        
     }
+
+    console.log(products)
 
     const editProductHandler = (id: string) => {
         history.push(`/products/${id}`)
@@ -90,12 +90,9 @@ const Products: React.FC = () => {
 
     return (
         <React.Fragment>
-            <Table columns={columns} dataSource={productContext.products} rowKey={"id"} style={{ margin: "20px" }}>
+            <Table columns={columns} dataSource={products} rowKey={"id"} style={{ margin: "20px" }}>
 
             </Table>
-            <Route path={`/products/:productId`} exact>
-                <ProductDetail/>
-            </Route>
         </React.Fragment>
     )
 }

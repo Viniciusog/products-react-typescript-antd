@@ -39,7 +39,7 @@ const NewProduct: React.FC = (props) => {
             <Form.Item label="Description" name="description">
                 <Input ></Input>
             </Form.Item>
-            <Form.Item label="Expiration date" name="expirationDate">
+            <Form.Item label="Expiration date" name="expirationdate">
                 <DatePicker style={{ width: "100%" }} >
 
                 </DatePicker>

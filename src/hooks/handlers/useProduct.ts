@@ -1,5 +1,6 @@
 import { FormInstance } from "antd"
 import {Form, message} from "antd";
+import moment from "moment";
 
 import{Product} from "../../models/product";
 //Esse useProductContext serve apenas para termos acesso ao ProductContext
@@ -22,13 +23,12 @@ const useProduct = (): UseProduct => {
 
     const onFinish = () => {
         const product: Product = form.getFieldsValue()
-        console.log(product) 
 
         productContext.onAdd({
             id: Math.random().toString(), 
             name: product.name, 
             description: product.description, 
-            expirationdate: product.expirationdate
+            expirationdate: moment(product.expirationdate).format("YYYY-MM-DD")
         })
 
         //console.log(product) 
