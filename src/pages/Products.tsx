@@ -3,13 +3,14 @@ import { PagesContext } from '../store/pages-context';
 import { useContext } from "react"
 
 import {useHistory} from "react-router-dom"
-import { Table, Popconfirm, TableColumnProps, Button } from "antd"
+import { Table, Popconfirm,  Button } from "antd"
 import {Product} from '../models/product';
-import { Redirect, Route } from 'react-router-dom';
-import ProductDetail from './ProductDetails';
+
 import {useProduct} from "../hooks/handlers/useProduct"
 
 const Products: React.FC = () => {
+    const history = useHistory()
+
     //Modifica o título e subtítulo do header quando acessar a página de products
     const pagesContext = useContext(PagesContext);
     pagesContext.changeHeaderTitle("All products")
@@ -17,12 +18,7 @@ const Products: React.FC = () => {
 
     const {onDelete, products} = useProduct()
 
-    const history = useHistory()
-
-    const deleteProductHandler = (id: string) => {
-        
-    }
-
+    console.log(" - products - ")
     console.log(products)
 
     const editProductHandler = (id: string) => {
@@ -69,7 +65,7 @@ const Products: React.FC = () => {
                     <React.Fragment>
                         <Popconfirm
                             title="Are you sure you want to delete?"
-                            onConfirm={() => deleteProductHandler(record.id)}
+                            onConfirm={() => onDelete(record.id)}
                         >
                             <Button type="primary" style={{ background: "#c44242", border: "1px solid #c44d4d" }}>Delete</Button>
                         </Popconfirm>

@@ -16,11 +16,14 @@ interface UseProduct {
 
 const useProduct = (): UseProduct => {
 
-    //Instância do nosso form que será usado nas telas
+    //Instância do nosso form que será usado nas telas.
     const [form] = Form.useForm<Product>();
 
     const productContext = useProductContext()
 
+    //Quando apertar no botão do formulário da tela, será executada esta função abaixo. 
+    //Como a página está usando o form que nós estamos retornando nesse hook, então podemos pegar os dados
+    //do formulário através do form.getFieldsValue
     const onFinish = () => {
         const product: Product = form.getFieldsValue()
 
@@ -30,6 +33,8 @@ const useProduct = (): UseProduct => {
             description: product.description, 
             expirationdate: moment(product.expirationdate).format("YYYY-MM-DD")
         })
+
+        form.resetFields()
 
         //console.log(product) 
         return message.success("Produto cadastrado com sucesso!")
