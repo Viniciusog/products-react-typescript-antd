@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Product from "../models/product";
+import {Product} from "../models/product";
 
 //Define o tipo das propriedades do nosso ProductContext
 export type ProductContextObj = {

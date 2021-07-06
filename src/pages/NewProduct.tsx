@@ -33,14 +33,14 @@ const NewProduct: React.FC = (props) => {
 
             style={{ margin: "auto", marginTop: "20px", maxWidth: "min(600px, 90%)" }}
         >
-            <Form.Item label="Name">
-                <Input name="name"></Input>
+            <Form.Item label="Name" name="name">
+                <Input ></Input>
             </Form.Item>
-            <Form.Item label="Description">
-                <Input name="description"></Input>
+            <Form.Item label="Description" name="description">
+                <Input ></Input>
             </Form.Item>
-            <Form.Item label="Expiration date">
-                <DatePicker style={{ width: "100%" }} name="expirationDate">
+            <Form.Item label="Expiration date" name="expirationDate">
+                <DatePicker style={{ width: "100%" }} >
 
                 </DatePicker>
             </Form.Item>

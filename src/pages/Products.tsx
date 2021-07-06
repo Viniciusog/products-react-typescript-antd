@@ -1,12 +1,12 @@
 import React from 'react';
 import { PagesContext } from '../store/pages-context';
 import { useContext } from "react"
-import product from '../models/product';
+
 import {useHistory} from "react-router-dom"
 import { Table, Popconfirm, TableColumnProps, Button } from "antd"
 import { ProductContext } from "../store/products-context"
 import { idText } from 'typescript';
-import Product from '../models/product';
+import {Product} from '../models/product';
 import { Redirect, Route } from 'react-router-dom';
 import ProductDetail from './ProductDetails';
 

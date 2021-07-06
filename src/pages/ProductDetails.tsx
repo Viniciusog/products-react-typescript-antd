@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom"
 import { ProductContext } from "../store/products-context"
 import { PagesContext } from "../store/pages-context"
 import { Form, DatePicker, Button, Input, Alert } from "antd"
-import Product from "../models/product"
+import { Product } from "../models/product"
 import moment from "moment"
 
 type ProductDetailParams = {
@@ -59,22 +59,22 @@ const ProductDetail: React.FC = () => {
             const enteredDescription = description
             const enteredExpirationDate = expirationDate
 
-            if (enteredName.trim().length > 0 
-            && enteredDescription.trim().length > 0 
-            && enteredExpirationDate.trim().length > 0) {
-                productContext.onEditProduct(productId,
-                    new Product(
-                        productId,
-                        enteredName,
-                        enteredDescription,
-                        enteredExpirationDate))
-    
+            if (enteredName.trim().length > 0
+                && enteredDescription.trim().length > 0
+                && enteredExpirationDate.trim().length > 0) {
+                productContext.onEditProduct(productId, {
+                    id: productId,
+                    name: enteredName,
+                    description: enteredDescription,
+                    expirationdate: enteredExpirationDate
+                })
+
                 alert("Product updated!")
 
                 setName("")
                 setDescription("")
                 setExpirationDate("2021-01-01")
-    
+
                 history.replace("/products")
             } else {
                 alert("Values must not be empty!")

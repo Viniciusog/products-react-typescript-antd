@@ -1,7 +1,7 @@
 import { FormInstance } from "antd"
 import {Form, message} from "antd";
 
-import Product from "../../models/product";
+import{Product} from "../../models/product";
 //Esse useProductContext serve apenas para termos acesso ao ProductContext
 import {useProductContext} from "../context/useProductContext"
 
@@ -24,12 +24,13 @@ const useProduct = (): UseProduct => {
         const product: Product = form.getFieldsValue()
         console.log(product) 
 
-        productContext.onAdd(new Product(Math.random().toString(), 
-            product.name, 
-            product.description, 
-            product.expirationdate))
+        productContext.onAdd({
+            id: Math.random().toString(), 
+            name: product.name, 
+            description: product.description, 
+            expirationdate: product.expirationdate
+        })
 
-        //Lembrando, aqui o nosso produto não terá um id, o que pode dar erro por causa do construtor em product model
         //console.log(product) 
         return message.success("Produto cadastrado com sucesso!")
     }
