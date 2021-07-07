@@ -1,6 +1,7 @@
 import { FormInstance } from "antd"
 import {Form, message} from "antd";
 import moment from "moment";
+import {useHistory} from "react-router-dom"
 
 import{Product} from "../../models/product";
 //Esse useProductContext serve apenas para termos acesso ao ProductContext
@@ -23,6 +24,8 @@ const useProduct = (): UseProduct => {
 
     const productContext = useProductContext()
 
+    const history = useHistory()
+
     //Quando apertar no botão do formulário da tela, será executada esta função abaixo. 
     //Como a página está usando o form que nós estamos retornando nesse hook, então podemos pegar os dados
     //do formulário através do form.getFieldsValue
@@ -39,6 +42,9 @@ const useProduct = (): UseProduct => {
 
         form.resetFields()
 
+        //Envia o usuário para a página de produtos
+        history.push("/products")
+
         //console.log(product) 
         return message.success("Produto cadastrado com sucesso!")
     }
@@ -47,6 +53,8 @@ const useProduct = (): UseProduct => {
     //toEditProduct possui os todos os dados, porém o 'expirationdate' é um objeto moment. Por isso, precisamos
     //passar esse tipo moment para string
     const onEdit = (toEditProduct: Product) => {
+
+
         productContext.onEditProduct(toEditProduct.id, 
             {
                 //Pega todos os dados atualizados do produto
@@ -58,12 +66,15 @@ const useProduct = (): UseProduct => {
 
         form.resetFields()
 
+        //Envia usuário para a página de produtos
+        history.push("/products")
+
         return message.success("Produto editado com sucesso!")
     }
 
     const onDelete = (id: string) => {
         productContext.onRemove(id)
-        return message.success("Produto deletado com sucesso!")
+        return message.info("Produto deletado com sucesso!")
     }
 
     //É usado na página de editar produto (details page)
@@ -85,7 +96,7 @@ const useProduct = (): UseProduct => {
                 expirationdate: moment(product?.expirationdate, "YYYY-MM-DD")
             }
 
-            form.setFieldsValue(productWithCorrectExpirationDate!)
+            form.setFieldsValue(productWithCorrectExpirationDate)
         }   
     }
 

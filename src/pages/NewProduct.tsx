@@ -13,7 +13,8 @@ import { useProduct } from "../hooks/handlers/useProduct";
 const NewProduct: React.FC = (props) => {
 
     //Estamos pegando os valores automaticamente do nosso useProduct
-    const {form, onFinish, onEdit, onDelete, products} = useProduct()
+    //decomposição
+    const {form, onFinish} = useProduct()
 
     //Quando nós acessamos a rota '/', o react irá renderizar o nosso componente Home. 
     //Feito isso, o código abaixo atualizará o headerTitle e headerSubtitle do nosso PagesContext

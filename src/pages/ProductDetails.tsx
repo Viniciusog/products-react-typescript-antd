@@ -12,6 +12,7 @@ type ProductDetailParams = {
 
 const ProductDetail: React.FC = () => {
 
+    //decomposição
     const {form, onEdit, onGetProductById, onLoadForm} = useProduct()
 
     //Contexto das páginas
@@ -22,13 +23,11 @@ const ProductDetail: React.FC = () => {
     const route = useRouteMatch<ProductDetailParams>()
     const productId = route.params.productId
 
-    //Estamos inserindo valores no form, de acordo com o produto com id correspondente
-    onLoadForm(productId)
     //Estamos pegando o produto de acordo com o id da url
     const product = onGetProductById(productId)
 
-
-    console.log(product)
+    //Estamos inserindo valores no form, de acordo com o produto com id correspondente
+    onLoadForm(productId)
 
     if (product === null || product === undefined) {
         return <Alert message={`Product not found with id: ${productId}`} type="error"

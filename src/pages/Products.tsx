@@ -52,14 +52,6 @@ const Products: React.FC = () => {
             title: "Actions",
             dataIndex: 'action',
             key: "action",
-            /*  render: (_: string, record: Product): JSX.Element => {
-                 <Popconfirm
-                     title="Are you sure you want to delete?"
-                     onConfirm={() => deleteProductHandler(record.id)}
-                 >
-                     <Button type="text">Delete</Button>
-                 </Popconfirm>
-             }, */
             render: (_: string, record: Product): JSX.Element => {
                 return (
                     <React.Fragment>
