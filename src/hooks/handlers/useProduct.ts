@@ -33,7 +33,7 @@ const useProduct = (): UseProduct => {
         const product: Product = form.getFieldsValue()
 
         productContext.onAdd({
-            id: Math.random().toString(), 
+            id: (Math.random() * 100000).toFixed().toString(), 
             name: product.name, 
             description: product.description, 
             //passando de moment para string

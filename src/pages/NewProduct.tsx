@@ -21,7 +21,7 @@ const NewProduct: React.FC = (props) => {
     //Quanto o contexto é atualizado, as páginas que possuem 'useContext(PagesContext)' serão recarregadas
     const pagesContext = useContext(PagesContext)
     pagesContext.changeHeaderTitle("New Product")
-    pagesContext.changeHeaderSubtitle("Add a new product completing the form bellow")
+    pagesContext.changeHeaderSubtitle("")
 
     return (
         <Form
